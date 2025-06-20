@@ -1,0 +1,1122 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Our Love</title>
+        <style>
+            body {
+                font-family: 'Arial', sans-serif;
+                background-color: #fff0f5;
+                color: #555;
+                margin: 0;
+                padding: 0;
+                line-height: 1.6;
+                min-height: 100vh;
+                display: flex;
+                flex-direction: column;
+            }
+            
+            .container {
+                max-width: 900px;
+                margin: 40px auto 40px auto;
+                padding: 32px 20px 32px 20px;
+                background: rgba(255,255,255,0.95);
+                border-radius: 24px;
+                box-shadow: 0 8px 32px rgba(255, 182, 193, 0.18);
+            }
+            
+            header {
+                text-align: center;
+                padding: 40px 0;
+                background: linear-gradient(135deg, #ffb6c1, #ff69b4);
+                color: white;
+                border-radius: 15px;
+                margin-bottom: 30px;
+                box-shadow: 0 4px 15px rgba(255, 105, 180, 0.3);
+                letter-spacing: 2px;
+                margin-top: 0;
+            }
+            
+            h1 {
+                font-size: 2.8em;
+                margin-bottom: 10px;
+                text-shadow: 1px 1px 3px rgba(0,0,0,0.2);
+                margin-top: 0;
+            }
+            
+            .couple-name {
+                font-size: 1.8em;
+                font-style: italic;
+                letter-spacing: 1px;
+                margin-bottom: 0;
+            }
+            
+            .heart {
+                color: #ff1493;
+                font-size: 1.2em;
+                margin: 0 5px;
+            }
+            
+            .section {
+                background-color: white;
+                border-radius: 15px;
+                padding: 25px;
+                margin-bottom: 30px;
+                box-shadow: 0 4px 15px rgba(255, 182, 193, 0.3);
+                border: 1px solid #ffd1dc;
+                margin-top: 32px;
+                margin-bottom: 40px;
+            }
+            
+            h2 {
+                color: #ff69b4;
+                border-bottom: 2px dashed #ffb6c1;
+                padding-bottom: 10px;
+                font-size: 1.8em;
+                text-align: center;
+                margin-top: 0;
+                margin-bottom: 28px;
+            }
+            
+            /* 照片上传按钮美化 */
+            #photoUpload + label, label[for="photoUpload"] {
+                display: block;
+                margin: 0 auto 25px auto;
+                background: linear-gradient(90deg, #ffb6c1 60%, #ff69b4 100%);
+                color: white;
+                padding: 12px 32px;
+                border-radius: 30px;
+                cursor: pointer;
+                font-size: 1.1em;
+                font-weight: bold;
+                box-shadow: 0 2px 8px rgba(255, 105, 180, 0.15);
+                text-align: center;
+                transition: background 0.3s, transform 0.2s;
+            }
+            #photoUpload + label:hover, label[for="photoUpload"]:hover {
+                background: linear-gradient(90deg, #ff69b4 60%, #ffb6c1 100%);
+                transform: translateY(-2px) scale(1.04);
+            }
+            
+            .photo-gallery {
+                display: grid;
+                grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+                gap: 28px;
+                margin-top: 20px;
+            }
+            
+            .photo-item {
+                position: relative;
+                overflow: hidden;
+                border-radius: 16px;
+                box-shadow: 0 3px 16px rgba(255, 105, 180, 0.13);
+                height: 240px;
+                transition: transform 0.3s, box-shadow 0.3s;
+                background: #fff0f5;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
+            .photo-item:hover {
+                transform: translateY(-7px) scale(1.03);
+                box-shadow: 0 8px 28px rgba(255, 105, 180, 0.22);
+            }
+            .photo-item img {
+                width: 100%;
+                height: 100%;
+                object-fit: contain;
+                background: #fff0f5;
+                display: block;
+                margin: 0 auto;
+                transition: transform 0.5s;
+            }
+            .photo-item:hover img {
+                transform: scale(1.12);
+            }
+            .photo-caption {
+                position: absolute;
+                bottom: 0;
+                left: 0;
+                right: 0;
+                background: linear-gradient(transparent, rgba(255, 105, 180, 0.8));
+                color: white;
+                padding: 15px;
+                text-align: center;
+                font-weight: bold;
+                font-size: 1.08em;
+            }
+            
+            .countdown-container {
+                display: flex;
+                justify-content: center;
+                gap: 32px;
+                margin: 40px 0 0 0;
+                flex-wrap: wrap;
+            }
+            .countdown-box {
+                text-align: center;
+                background: linear-gradient(145deg, #ffb6c1, #ff69b4);
+                padding: 24px 18px;
+                border-radius: 16px;
+                min-width: 90px;
+                color: white;
+                box-shadow: 0 4px 10px rgba(255, 105, 180, 0.18);
+            }
+            .countdown-number {
+                font-size: 2.5em;
+                font-weight: bold;
+                text-shadow: 1px 1px 3px rgba(0,0,0,0.2);
+            }
+            .countdown-label {
+                font-size: 1em;
+                letter-spacing: 1px;
+            }
+            .anniversary-date {
+                text-align: center;
+                font-size: 1.3em;
+                margin: 30px 0 20px 0;
+                color: #ff1493;
+                font-weight: bold;
+                background-color: #fff0f5;
+                padding: 15px 30px;
+                border-radius: 50px;
+                display: inline-block;
+                border: 2px dashed #ff69b4;
+            }
+            
+            .message-board {
+                margin-top: 20px;
+            }
+            .message-form {
+                display: flex;
+                flex-direction: column;
+                gap: 20px;
+                margin-bottom: 40px;
+                background-color: #fff9fb;
+                padding: 32px 18px 24px 18px;
+                border-radius: 15px;
+                border: 1px dashed #ffb6c1;
+                max-width: 600px;
+                margin-left: auto;
+                margin-right: auto;
+            }
+            .message-form input, .message-form textarea {
+                padding: 14px;
+                border: 1.5px solid #ffb6c1;
+                border-radius: 8px;
+                font-family: inherit;
+                background-color: white;
+                font-size: 1em;
+                width: 100%;
+                box-sizing: border-box;
+            }
+            .message-form input:focus, .message-form textarea:focus {
+                outline: none;
+                border-color: #ff69b4;
+                box-shadow: 0 0 0 3px rgba(255, 105, 180, 0.13);
+            }
+            .message-form textarea {
+                height: 120px;
+                resize: vertical;
+            }
+            .submit-btn {
+                background: linear-gradient(to right, #ff69b4, #ff1493);
+                color: white;
+                border: none;
+                padding: 15px 0;
+                border-radius: 50px;
+                cursor: pointer;
+                font-size: 1.1em;
+                font-weight: bold;
+                letter-spacing: 1px;
+                transition: transform 0.3s, box-shadow 0.3s;
+                box-shadow: 0 4px 10px rgba(255, 105, 180, 0.13);
+                width: 100%;
+            }
+            .submit-btn:hover {
+                transform: translateY(-2px) scale(1.03);
+                box-shadow: 0 6px 15px rgba(255, 105, 180, 0.18);
+            }
+            .messages {
+                display: flex;
+                flex-direction: column;
+                gap: 24px;
+                max-width: 600px;
+                margin: 0 auto;
+            }
+            .message {
+                background-color: white;
+                padding: 20px 18px;
+                border-radius: 15px;
+                border-left: 5px solid #ff69b4;
+                box-shadow: 0 3px 10px rgba(255, 182, 193, 0.13);
+                position: relative;
+                overflow: hidden;
+            }
+            .message::before {
+                content: "";
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 5px;
+                height: 100%;
+                background: linear-gradient(to bottom, #ff69b4, #ffb6c1);
+            }
+            .message-author {
+                font-weight: bold;
+                color: #ff1493;
+                margin-bottom: 8px;
+                font-size: 1.2em;
+            }
+            .message-date {
+                font-size: 0.9em;
+                color: #ff69b4;
+                margin-bottom: 15px;
+            }
+            .message-content {
+                line-height: 1.6;
+                font-size: 1.1em;
+            }
+            footer {
+                text-align: center;
+                padding: 30px 0 0 0;
+                color: #ff69b4;
+                font-size: 1em;
+                margin-top: 60px;
+            }
+            @media (max-width: 900px) {
+                .container {
+                    max-width: 98vw;
+                    padding: 8vw 2vw;
+                }
+                .photo-gallery {
+                    grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+                    gap: 16px;
+                }
+            }
+            @media (max-width: 600px) {
+                .container {
+                    padding: 0 2vw;
+                    margin: 0;
+                    border-radius: 0;
+                }
+                header {
+                    padding: 24px 0 18px 0;
+                    border-radius: 0;
+                }
+                h1 {
+                    font-size: 1.5em;
+                }
+                .couple-name {
+                    font-size: 1em;
+                }
+                .section {
+                    padding: 12px 4px;
+                    border-radius: 0;
+                    margin-top: 18px;
+                    margin-bottom: 18px;
+                }
+                h2 {
+                    font-size: 1.2em;
+                    margin-bottom: 16px;
+                }
+                .photo-gallery {
+                    grid-template-columns: 1fr;
+                    gap: 10px;
+                }
+                .photo-item {
+                    height: 160px;
+                    border-radius: 8px;
+                }
+                .countdown-container {
+                    gap: 10px;
+                    margin: 18px 0 0 0;
+                }
+                .countdown-box {
+                    min-width: 60px;
+                    padding: 10px 4px;
+                    border-radius: 8px;
+                }
+                .countdown-number {
+                    font-size: 1.2em;
+                }
+                .anniversary-date {
+                    font-size: 1em;
+                    padding: 8px 10px;
+                    border-radius: 30px;
+                }
+                .message-form, .messages {
+                    max-width: 100vw;
+                    padding: 8px 2vw;
+                }
+                .message {
+                    padding: 10px 6px;
+                    border-radius: 6px;
+                }
+                footer {
+                    padding: 18px 0 0 0;
+                    font-size: 0.9em;
+                    margin-top: 30px;
+                }
+            }
+            .delete-photo-btn {
+                position: absolute;
+                top: 8px;
+                right: 8px;
+                background: rgba(255,105,180,0.85);
+                color: #fff;
+                border: none;
+                border-radius: 50%;
+                width: 28px;
+                height: 28px;
+                font-size: 1.2em;
+                cursor: pointer;
+                z-index: 2;
+                box-shadow: 0 2px 6px rgba(255,105,180,0.18);
+                transition: background 0.2s, transform 0.2s;
+            }
+            .delete-photo-btn:hover {
+                background: #ff1493;
+                transform: scale(1.15);
+            }
+            .countdown-day-box {
+                background: linear-gradient(135deg, #ffb6c1 60%, #fff0f5 100%);
+                border-radius: 32px;
+                padding: 32px 0 24px 0;
+                min-width: 220px;
+                box-shadow: 0 4px 18px rgba(255, 182, 193, 0.13);
+                margin: 0 auto;
+                text-align: center;
+                align-items: center;
+                justify-content: center;
+                display: flex;
+                flex-direction: column;
+                margin-bottom: 32px;
+            }
+            .countdown-day-number, .countdown-day-label, .countdown-day-title {
+                text-align: center;
+                width: 100%;
+            }
+            .countdown-day-number {
+                font-size: 3.2em;
+                font-weight: bold;
+                color: #ff1493;
+                margin-bottom: 8px;
+            }
+            .countdown-day-label {
+                font-size: 1.2em;
+                color: #ff69b4;
+            }
+            .countdown-day-title {
+                font-size: 1.1em;
+                color: #888;
+                margin-top: 10px;
+            }
+            .anniversary-input-modal {
+                position: fixed; left: 0; top: 0; width: 100vw; height: 100vh; background: rgba(0,0,0,0.18); display: flex; align-items: center; justify-content: center; z-index: 1000;
+            }
+            .anniversary-input-box {
+                background: #fff; border-radius: 18px; box-shadow: 0 4px 24px rgba(255,182,193,0.18); padding: 32px 28px; min-width: 260px; display: flex; flex-direction: column; gap: 18px; align-items: center;
+            }
+            .anniversary-input-box input[type="text"], .anniversary-input-box input[type="date"] {
+                padding: 10px 12px; border: 1.5px solid #ffb6c1; border-radius: 8px; font-size: 1em; width: 180px;
+            }
+            .anniversary-input-box input:focus { outline: none; border-color: #ff69b4; }
+            .anniversary-input-box button {
+                background: linear-gradient(90deg,#ffb6c1,#ff69b4); color: #fff; border: none; border-radius: 18px; padding: 8px 24px; font-size: 1em; font-weight: bold; cursor: pointer; margin-top: 8px;
+            }
+            .anniversary-input-box button:hover { background: linear-gradient(90deg,#ff69b4,#ffb6c1); }
+            #anniversaryList {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+            }
+            section#countdown {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+                text-align: center;
+            }
+            .delete-msg-btn {
+                position: absolute;
+                top: 8px;
+                right: 8px;
+                background: rgba(255,105,180,0.85);
+                color: #fff;
+                border: none;
+                border-radius: 50%;
+                width: 24px;
+                height: 24px;
+                font-size: 1em;
+                cursor: pointer;
+                z-index: 2;
+                box-shadow: 0 2px 6px rgba(255,105,180,0.13);
+                transition: background 0.2s, transform 0.2s;
+            }
+            .delete-msg-btn:hover {
+                background: #ff1493;
+                transform: scale(1.15);
+            }
+            .album-modal-bg {position:fixed;left:0;top:0;width:100vw;height:100vh;background:rgba(0,0,0,0.45);z-index:9999;display:flex;align-items:center;justify-content:center;}
+            .album-modal-box {background:#fff;border-radius:18px;max-width:90vw;max-height:90vh;overflow:auto;padding:32px 18px;box-shadow:0 8px 32px rgba(255,182,193,0.18);position:relative;}
+            .album-modal-title {font-size:1.3em;color:#ff69b4;font-weight:bold;margin-bottom:18px;text-align:center;}
+            .album-modal-close {position:absolute;top:12px;right:18px;background:#ff69b4;color:#fff;border:none;border-radius:50%;width:32px;height:32px;font-size:1.3em;cursor:pointer;}
+            .album-modal-gallery {display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:18px;}
+            .album-modal-photo {position:relative;border-radius:12px;overflow:hidden;background:#fff0f5;box-shadow:0 2px 8px rgba(255,182,193,0.13);}
+            .album-modal-photo img{width:100%;height:180px;object-fit:contain;display:block;}
+            .album-modal-photo .photo-caption{position:absolute;bottom:0;left:0;right:0;background:rgba(255,105,180,0.7);color:#fff;padding:6px 0;text-align:center;font-size:1em;}
+            @media(max-width:600px){.album-modal-box{padding:10px 2vw;}.album-modal-gallery{grid-template-columns:1fr;gap:8px;}.album-modal-photo img{height:120px;}}
+            .info-card {background:#fff0f5;border-radius:18px;box-shadow:0 2px 8px rgba(255,182,193,0.13);padding:24px 18px;display:flex;flex-direction:column;align-items:center;min-width:180px;max-width:220px;position:relative;}
+            .info-avatar {
+                width:90px;
+                height:90px;
+                border-radius: 12px;
+                box-shadow:0 2px 8px rgba(255,182,193,0.18);
+                margin-bottom:12px;
+                object-fit:cover;
+                background:#fff;
+            }
+            .info-edit-btn {position:absolute;top:12px;right:12px;background:#ff69b4;color:#fff;border:none;border-radius:50%;width:28px;height:28px;font-size:1.1em;cursor:pointer;}
+            .info-edit-btn:hover{background:#ff1493;}
+            .info-label{color:#ff69b4;font-weight:bold;font-size:1em;margin-top:6px;}
+            .info-value{color:#555;font-size:0.98em;margin-bottom:4px;}
+            @media(max-width:600px){.info-card{min-width:120px;max-width:100vw;padding:12px 2vw;}}
+        </style>
+    </head>
+<body>
+    <div class="container">
+        <header>
+            <h1>our love</h1>
+            <div class="couple-name">Regina ❤ May</div>
+        </header>
+        <section class="section" id="our-info" style="margin-bottom:32px;">
+            <h2 style="text-align:center;color:#ff69b4;margin-bottom:28px;">我们的信息</h2>
+            <div id="ourInfoCards" style="display:flex;justify-content:center;align-items:center;gap:40px;flex-wrap:wrap;"></div>
+        </section>
+
+        <section class="section" id="photos">
+            <h2>Our Memories</h2>
+            <!-- 照片分类选择和上传按钮 -->
+            <div style="display:flex;align-items:center;gap:12px;margin-bottom:15px;">
+                <label for="photoCategory" style="color:#ff69b4;font-weight:bold;">分类：</label>
+                <select id="photoCategory" style="padding:6px 12px;border-radius:8px;border:1.5px solid #ffb6c1;">
+                    <option value="日常">日常</option>
+                    <option value="纪念日">纪念日</option>
+                    <option value="自定义">自定义...</option>
+                </select>
+                <input type="text" id="customCategory" placeholder="自定义分类" style="display:none;padding:6px 12px;border-radius:8px;border:1.5px solid #ffb6c1;width:120px;">
+                <label for="photoUpload" style="display:inline-block; background:#ff9999; color:white; padding:8px 18px; border-radius:5px; cursor:pointer; font-size:1em; margin:0;">上传照片
+                    <input type="file" id="photoUpload" accept="image/*" multiple style="display:none;">
+                </label>
+            </div>
+            <div id="photoGalleryByCategory"></div>
+        </section>
+        
+        <section class="section" id="countdown">
+            <h2>Our exclusive memories</h2>
+            <button id="addAnniversaryBtn" style="display:block;margin:0 auto 18px auto;background:linear-gradient(90deg,#ffb6c1,#ff69b4);color:#fff;border:none;border-radius:24px;padding:10px 28px;font-size:1em;cursor:pointer;font-weight:bold;box-shadow:0 2px 8px rgba(255,105,180,0.13);transition:background 0.2s,transform 0.2s;">＋ 添加纪念日</button>
+            <div class="anniversary-date">我们的恋爱纪念日: 2025-05-10</div>
+            <div class="current-datetime" id="currentDatetime" style="text-align:center;font-size:1.1em;color:#888;margin-bottom:18px;"></div>
+            <div id="anniversaryList">
+                <div class="countdown-day-box" id="countdownDayBox" style="display:flex;flex-direction:column;align-items:center;justify-content:center;margin-top:18px;">
+                    <div class="countdown-day-number" id="countdownDayNumber" style="font-size:3.2em;font-weight:bold;color:#ff1493;margin-bottom:8px;"></div>
+                    <div class="countdown-day-label" id="countdownDayLabel" style="font-size:1.2em;color:#ff69b4;"></div>
+                    <div class="countdown-day-title" id="countdownDayTitle" style="font-size:1.1em;color:#888;margin-top:10px;">我们的恋爱纪念日</div>
+                </div>
+            </div>
+        </section>
+        
+        <section class="section" id="messages">
+            <h2>今天发生了什么有趣的事情呀</h2>
+            <div class="message-board">
+                <form class="message-form" id="messageForm">
+                    <input type="text" id="author" placeholder="你的名字" required>
+                    <label for="msgDate" style="font-size:0.98em;color:#888;">留言日期：</label>
+                    <input type="date" id="msgDate" required style="max-width:200px;" placeholder="选择日期" title="选择日期">
+                    <textarea id="content" placeholder="写下你想说的话..." required></textarea>
+                    <button type="submit" class="submit-btn">留下你的爱</button>
+                </form>
+                <div class="messages" id="messageList"></div>
+                <!-- 留言会在这里动态添加 -->
+            </div>
+        </section>
+
+        <footer>
+            <p>我和你 | 用❤️制作</p>
+        </footer>
+    </div>
+
+    <script>
+        // 实时显示当前日期和时间
+        function updateCurrentDatetime() {
+            const now = new Date();
+            const y = now.getFullYear();
+            const m = (now.getMonth()+1).toString().padStart(2,'0');
+            const d = now.getDate().toString().padStart(2,'0');
+            const hh = now.getHours().toString().padStart(2,'0');
+            const mm = now.getMinutes().toString().padStart(2,'0');
+            const ss = now.getSeconds().toString().padStart(2,'0');
+            document.getElementById('currentDatetime').textContent = `今天是：${y}-${m}-${d} ${hh}:${mm}:${ss}`;
+        }
+        setInterval(updateCurrentDatetime, 1000);
+        updateCurrentDatetime();
+
+        // 纪念日倒数日逻辑（支持多个+本地存储）
+        const ANNIVERSARY_KEY = 'anniversaryData';
+        function getAnniversaryData() {
+            const data = localStorage.getItem(ANNIVERSARY_KEY);
+            if (data) {
+                try {
+                    return JSON.parse(data);
+                } catch (e) { return null; }
+            }
+            // 默认纪念日
+            return [
+                {title:'我们的恋爱纪念日', date:'2025-05-10'}
+            ];
+        }
+        function saveAnniversaryData(data) {
+            localStorage.setItem(ANNIVERSARY_KEY, JSON.stringify(data));
+        }
+        let anniversaryData = getAnniversaryData();
+        function renderAnniversaries() {
+            const list = document.getElementById('anniversaryList');
+            list.innerHTML = '';
+            anniversaryData.forEach(item => {
+                const box = document.createElement('div');
+                box.className = 'countdown-day-box';
+                // 计算天数
+                const now = new Date();
+                const ann = new Date(item.date);
+                ann.setHours(0,0,0,0);
+                now.setHours(0,0,0,0);
+                const diff = ann - now;
+                const oneDay = 1000*60*60*24;
+                let days = Math.floor(Math.abs(diff)/oneDay);
+                let label = '';
+                if(diff>0){
+                    label = `还有 ${days} 天`;
+                }else if(diff<0){
+                    label = `已经过去 ${days} 天`;
+                }else{
+                    days = 0;
+                    label = '就是今天！';
+                }
+                box.innerHTML = `
+                    <div class="countdown-day-number">${days}</div>
+                    <div class="countdown-day-label">${label}</div>
+                    <div class="countdown-day-title">${item.title}</div>
+                `;
+                list.appendChild(box);
+            });
+        }
+        renderAnniversaries();
+        setInterval(renderAnniversaries, 1000*60*30);
+
+        // 添加纪念日弹窗
+        document.getElementById('addAnniversaryBtn').onclick = function() {
+            const modal = document.createElement('div');
+            modal.className = 'anniversary-input-modal';
+            modal.innerHTML = `
+                <div class='anniversary-input-box'>
+                    <div style='font-size:1.1em;color:#ff69b4;font-weight:bold;'>添加纪念日</div>
+                    <input type='text' id='annivTitle' placeholder='事件名称' maxlength='20' required>
+                    <input type='date' id='annivDate' required>
+                    <div style='display:flex;gap:12px;'>
+                        <button id='annivAddBtn'>添加</button>
+                        <button id='annivCancelBtn' style='background:#eee;color:#888;'>取消</button>
+                    </div>
+                </div>
+            `;
+            document.body.appendChild(modal);
+            document.getElementById('annivCancelBtn').onclick = ()=>modal.remove();
+            document.getElementById('annivAddBtn').onclick = function() {
+                const title = document.getElementById('annivTitle').value.trim();
+                const date = document.getElementById('annivDate').value;
+                if(!title || !date) { alert('请填写完整'); return; }
+                anniversaryData.push({title, date});
+                saveAnniversaryData(anniversaryData);
+                renderAnniversaries();
+                modal.remove();
+            };
+        };
+
+        // 默认让日期框为今天
+        document.getElementById('msgDate').value = new Date().toISOString().split('T')[0];
+        
+        // 照片分类与本地存储
+        const PHOTO_KEY = 'lovePhotoGallery';
+        function getPhotos() {
+            const data = localStorage.getItem(PHOTO_KEY);
+            if (data) {
+                try { return JSON.parse(data); } catch (e) { return {}; }
+            }
+            // 默认无照片
+            return {};
+        }
+        function savePhotos(obj) {
+            localStorage.setItem(PHOTO_KEY, JSON.stringify(obj));
+        }
+        let photoData = getPhotos();
+        function renderPhotoGallery() {
+            const gallery = document.getElementById('photoGalleryByCategory');
+            gallery.innerHTML = '';
+            const categories = Object.keys(photoData);
+            if(categories.length === 0) {
+                gallery.innerHTML = '<div style="color:#aaa;text-align:center;margin:32px 0;">还没有上传照片哦～</div>';
+                return;
+            }
+            // 按拼音/字母顺序排序分类
+            categories.sort((a, b) => a.localeCompare(b, 'zh-CN'));
+            categories.forEach(cat => {
+                const group = document.createElement('div');
+                group.style.marginBottom = '36px';
+                const photos = photoData[cat]||[];
+                if(photos.length>6){
+                    // 相册卡片
+                    group.innerHTML = `
+                        <div class='album-card' style='display:flex;align-items:center;gap:18px;cursor:pointer;background:#fff0f5;border-radius:18px;box-shadow:0 2px 8px rgba(255,182,193,0.13);padding:18px 24px;'>
+                            <img src='${photos[0].dataUrl}' alt='封面' style='width:90px;height:90px;object-fit:cover;border-radius:12px;background:#fff;'>
+                            <div style='flex:1;'>
+                                <div style='font-size:1.2em;color:#ff69b4;font-weight:bold;margin-bottom:8px;'>${cat}</div>
+                                <div style='color:#888;'>${photos.length} 张照片</div>
+                            </div>
+                        </div>
+                    `;
+                    group.querySelector('.album-card').onclick = ()=>showAlbumModal(cat, photos);
+                }else{
+                    group.innerHTML = `<h3 style='color:#ff69b4;margin-bottom:18px;text-align:left;'>${cat}</h3>`;
+                    const grid = document.createElement('div');
+                    grid.className = 'photo-gallery';
+                    photos.forEach((photo, idx) => {
+                        const photoItem = document.createElement('div');
+                        photoItem.className = 'photo-item';
+                        photoItem.innerHTML = `
+                            <button class="delete-photo-btn" title="删除">×</button>
+                            <img src="${photo.dataUrl}" alt="${photo.name}">
+                            <div class="photo-caption">${photo.name}</div>
+                            <button class="edit-photo-name-btn" title="编辑图片名字" style="position:absolute;bottom:8px;right:8px;background:#ffb6c1;color:#fff;border:none;border-radius:8px;padding:2px 10px;font-size:0.95em;cursor:pointer;z-index:2;">编辑</button>
+                        `;
+                        photoItem.querySelector('.delete-photo-btn').onclick = function(ev) {
+                            ev.stopPropagation();
+                            photoData[cat].splice(idx,1);
+                            if(photoData[cat].length===0) delete photoData[cat];
+                            savePhotos(photoData);
+                            renderPhotoGallery();
+                        };
+                        // 编辑图片名字功能
+                        photoItem.querySelector('.edit-photo-name-btn').onclick = function(ev) {
+                            ev.stopPropagation();
+                            const newName = prompt('请输入新的图片名字', photo.name);
+                            if(newName && newName.trim() && newName !== photo.name) {
+                                photoData[cat][idx].name = newName.trim();
+                                savePhotos(photoData);
+                                renderPhotoGallery();
+                            }
+                        };
+                        grid.appendChild(photoItem);
+                    });
+                    group.appendChild(grid);
+                }
+                gallery.appendChild(group);
+            });
+        }
+        renderPhotoGallery();
+        // 分类选择逻辑
+        const photoCategory = document.getElementById('photoCategory');
+        const customCategory = document.getElementById('customCategory');
+        photoCategory.onchange = function() {
+            if(this.value==='自定义') {
+                customCategory.style.display='inline-block';
+                customCategory.focus();
+            } else {
+                customCategory.style.display='none';
+            }
+        };
+        // 自动压缩图片函数
+        function compressImage(file, maxWidth = 300, maxHeight = 300, quality = 0.7, callback) {
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                const img = new Image();
+                img.onload = function() {
+                    let w = img.width;
+                    let h = img.height;
+                    if (w > maxWidth || h > maxHeight) {
+                        if (w / h > maxWidth / maxHeight) {
+                            h = Math.round(h * maxWidth / w);
+                            w = maxWidth;
+                        } else {
+                            w = Math.round(w * maxHeight / h);
+                            h = maxHeight;
+                        }
+                    }
+                    const canvas = document.createElement('canvas');
+                    canvas.width = w;
+                    canvas.height = h;
+                    const ctx = canvas.getContext('2d');
+                    ctx.drawImage(img, 0, 0, w, h);
+                    const dataUrl = canvas.toDataURL('image/jpeg', quality);
+                    callback(dataUrl);
+                };
+                img.src = e.target.result;
+            };
+            reader.readAsDataURL(file);
+        }
+        // 照片上传功能（带分类）
+        function handlePhotoUpload(event) {
+            const files = event.target.files;
+            let cat = photoCategory.value;
+            if(cat==='自定义') cat = customCategory.value.trim()||'未命名';
+            if(!cat) cat = '未命名';
+            if(!photoData[cat]) photoData[cat]=[];
+            let imgCount = 0;
+            let finished = 0;
+            for (let i = 0; i < files.length; i++) {
+                const file = files[i];
+                if (!file.type.match('image.*')) continue;
+                imgCount++;
+            }
+            if(imgCount === 0) return;
+            for (let i = 0; i < files.length; i++) {
+                const file = files[i];
+                if (!file.type.match('image.*')) continue;
+                compressImage(file, 800, 800, 0.7, function(dataUrl){
+                    photoData[cat].push({
+                        name: file.name.split('.')[0],
+                        dataUrl: dataUrl
+                    });
+                    finished++;
+                    if(finished === imgCount) {
+                        savePhotos(photoData);
+                        renderPhotoGallery();
+                    }
+                });
+            }
+            event.target.value = '';
+            photoCategory.selectedIndex = 0;
+            customCategory.value = '';
+            customCategory.style.display = 'none';
+        }
+        document.getElementById('photoUpload').addEventListener('change', handlePhotoUpload, false);
+
+        // 留言板功能（支持本地保存和删除）
+        const MESSAGE_KEY = 'loveMessageBoard';
+        function getMessages() {
+            const data = localStorage.getItem(MESSAGE_KEY);
+            if (data) {
+                try { return JSON.parse(data); } catch (e) { return []; }
+            }
+            // 默认留言
+            return [
+                {author:'May', date:'2025-06-19', content:'我总是特别特别想念你，想一直呆在你的身边。'}
+            ];
+        }
+        function saveMessages(msgs) {
+            localStorage.setItem(MESSAGE_KEY, JSON.stringify(msgs));
+        }
+        let messages = getMessages();
+        function renderMessages() {
+            const list = document.getElementById('messageList');
+            list.innerHTML = '';
+            messages.forEach((msg, idx) => {
+                const div = document.createElement('div');
+                div.className = 'message';
+                div.innerHTML = `
+                    <button class="delete-msg-btn" title="删除">×</button>
+                    <div class="message-author">${msg.author}</div>
+                    <div class="message-date">${msg.date}</div>
+                    <div class="message-content">${msg.content}</div>
+                `;
+                div.querySelector('.delete-msg-btn').onclick = function(ev) {
+                    ev.stopPropagation();
+                    messages.splice(idx,1);
+                    saveMessages(messages);
+                    renderMessages();
+                };
+                list.appendChild(div);
+            });
+        }
+        renderMessages();
+        // 留言提交
+        const form = document.getElementById('messageForm');
+        form.addEventListener('submit', function(e) {
+            e.preventDefault();
+            const author = document.getElementById('author').value.trim();
+            const content = document.getElementById('content').value.trim();
+            const date = document.getElementById('msgDate').value;
+            if(!author || !content || !date) return;
+            messages.unshift({author, date, content});
+            saveMessages(messages);
+            renderMessages();
+            document.getElementById('author').value = '';
+            document.getElementById('content').value = '';
+            document.getElementById('msgDate').value = new Date().toISOString().split('T')[0];
+        });
+
+        // 相册弹窗逻辑
+        function showAlbumModal(cat, photos) {
+            const modalBg = document.createElement('div');
+            modalBg.className = 'album-modal-bg';
+            modalBg.innerHTML = `
+                <div class='album-modal-box'>
+                    <button class='album-modal-close' title='关闭'>×</button>
+                    <div class='album-modal-title'>${cat}（${photos.length}张）</div>
+                    <div class='album-modal-gallery'>
+                        ${photos.map((photo, idx)=>`
+                            <div class='album-modal-photo' style='position:relative;'>
+                                <img src='${photo.dataUrl}' alt='${photo.name}'>
+                                <div class='photo-caption'>${photo.name}</div>
+                                <button class="delete-photo-btn" title="删除" style="position:absolute;top:8px;right:8px;background:rgba(255,105,180,0.85);color:#fff;border:none;border-radius:50%;width:24px;height:24px;font-size:1em;cursor:pointer;z-index:2;box-shadow:0 2px 6px rgba(255,105,180,0.13);">×</button>
+                                <button class="edit-photo-name-btn" title="编辑图片名字" style="position:absolute;bottom:8px;right:8px;background:#ffb6c1;color:#fff;border:none;border-radius:8px;padding:2px 10px;font-size:0.95em;cursor:pointer;z-index:2;">编辑</button>
+                            </div>
+                        `).join('')}
+                    </div>
+                </div>
+            `;
+            // 关闭弹窗
+            modalBg.querySelector('.album-modal-close').onclick = ()=>modalBg.remove();
+            modalBg.onclick = e=>{if(e.target===modalBg) modalBg.remove();};
+            // 绑定每张大图的删除和编辑事件
+            const photoDivs = modalBg.querySelectorAll('.album-modal-photo');
+            photoDivs.forEach((div, idx) => {
+                // 删除
+                div.querySelector('.delete-photo-btn').onclick = function(ev) {
+                    ev.stopPropagation();
+                    photos.splice(idx,1);
+                    // 同步到photoData
+                    const allCats = getPhotos();
+                    allCats[cat] = photos;
+                    if(photos.length===0) delete allCats[cat];
+                    savePhotos(allCats);
+                    modalBg.remove();
+                    renderPhotoGallery();
+                };
+                // 编辑名字
+                div.querySelector('.edit-photo-name-btn').onclick = function(ev) {
+                    ev.stopPropagation();
+                    const newName = prompt('请输入新的图片名字', photos[idx].name);
+                    if(newName && newName.trim() && newName !== photos[idx].name) {
+                        photos[idx].name = newName.trim();
+                        const allCats = getPhotos();
+                        allCats[cat] = photos;
+                        savePhotos(allCats);
+                        // 刷新弹窗内容
+                        modalBg.remove();
+                        showAlbumModal(cat, photos);
+                        renderPhotoGallery();
+                    }
+                };
+            });
+            document.body.appendChild(modalBg);
+        }
+        // 我们的信息介绍（可编辑+头像上传+本地保存）
+        const INFO_KEY = 'ourInfoData';
+        const defaultInfo = [
+        {name:'',avatar:'https://api.dicebear.com/7.x/personas/svg?seed=person1',birthday:'',sign:'',mbti:'',signature:''},
+        {name:'',avatar:'https://api.dicebear.com/7.x/personas/svg?seed=person2',birthday:'',sign:'',mbti:'',signature:''}
+    ];
+
+            function getInfo(){
+            const data = localStorage.getItem(INFO_KEY);
+            let arr = defaultInfo;
+            if(data){
+                try {
+                    arr = JSON.parse(data);
+                } catch(e){
+                    arr = defaultInfo;
+                }
+            }
+            // 保证有两个对象
+            if (!Array.isArray(arr)) arr = defaultInfo;
+            if (arr.length < 2) {
+                for(let i=arr.length; i<2; i++){
+                    arr.push({...defaultInfo[i]});
+                }
+            }
+            return arr;
+        }
+
+        function saveInfo(arr){
+            // 补全为2个对象
+            if (!Array.isArray(arr)) arr = [];
+            while(arr.length < 2){
+                arr.push({name:'',avatar:'https://api.dicebear.com/7.x/personas/svg?seed=person'+(arr.length+1),birthday:'',sign:'',mbti:'',signature:''});
+            }
+            localStorage.setItem(INFO_KEY, JSON.stringify(arr));
+        }
+
+        let ourInfo = getInfo();
+
+        function renderOurInfo(){
+            const box = document.getElementById('ourInfoCards');
+            box.innerHTML = '';
+            // 渲染第一个人
+            const info0 = ourInfo[0] || {name:'',avatar:'https://api.dicebear.com/7.x/personas/svg?seed=person1',birthday:'',sign:'',mbti:'',signature:''};
+            const card1 = document.createElement('div');
+            card1.className = 'info-card';
+            card1.innerHTML = `
+
+                <button class="info-edit-btn" title="编辑" id="editBtn0">✎</button>
+                <div class="info-label">姓名</div><div class="info-value">${info0.name||'未填写'}</div>
+                <div class="info-label">生日</div><div class="info-value">${info0.birthday||'未填写'}</div>
+                <div class="info-label">星座</div><div class="info-value">${info0.sign||'未填写'}</div>
+                <div class="info-label">MBTI</div><div class="info-value">${info0.mbti||'未填写'}</div>
+                <!-- <div class="info-label">签名</div><div class="info-value">${info0.signature||'未填写'}</div> -->
+            `;
+            card1.querySelector(`#editBtn0`).onclick = ()=>showEditInfoModal(0);
+            box.appendChild(card1);
+            // 渲染宠物卡片
+            const petCard = document.createElement('div');
+            petCard.className = 'info-card';
+            petCard.innerHTML = `
+                <img src="${petInfo.avatar}" class="info-avatar" id="petAvatar">
+                <button class="info-edit-btn" title="编辑" id="editPetBtn">✎</button>
+                <div class="info-label">儿砸</div><div class="info-value">${petInfo.name||'未填写'}</div>
+                <div class="info-label">年龄</div><div class="info-value">${petInfo.age||'未填写'}</div>
+            `;
+            petCard.querySelector('#editPetBtn').onclick = showEditPetModal;
+            box.appendChild(petCard);
+            // 渲染第二个人
+            const info1 = ourInfo[1] || {name:'',avatar:'https://api.dicebear.com/7.x/personas/svg?seed=person2',birthday:'',sign:'',mbti:'',signature:''}
+            const card2 = document.createElement('div');
+            card2.className = 'info-card';
+            card2.innerHTML = `
+
+                <button class="info-edit-btn" title="编辑" id="editBtn1">✎</button>
+                <div class="info-label">姓名</div><div class="info-value">${info1.name||'未填写'}</div>
+                <div class="info-label">生日</div><div class="info-value">${info1.birthday||'未填写'}</div>
+                <div class="info-label">星座</div><div class="info-value">${info1.sign||'未填写'}</div>
+                <div class="info-label">MBTI</div><div class="info-value">${info1.mbti||'未填写'}</div>
+                <!-- <div class="info-label">签名</div><div class="info-value">${info1.signature||'未填写'}</div> -->
+            `;
+            card2.querySelector(`#editBtn1`).onclick = ()=>showEditInfoModal(1);
+            box.appendChild(card2);
+        }
+
+        // 编辑弹窗
+        function showEditInfoModal(idx){
+            const info = ourInfo[idx];
+            const modal = document.createElement('div');
+            modal.className = 'anniversary-input-modal';
+            modal.innerHTML = `
+                <div class='anniversary-input-box' style='min-width:260px;'>
+                    <div style='font-size:1.1em;color:#ff69b4;font-weight:bold;margin-bottom:8px;'>编辑信息</div>
+                    <!-- <label style='margin-bottom:4px;'>头像：</label> -->
+                    <!-- <input type='file' id='editAvatar' accept='image/*' style='margin-bottom:8px;'> -->
+                    <!-- <img src='${info.avatar}' id='editAvatarPreview' style='width:60px;height:60px;border-radius:50%;margin-bottom:8px;object-fit:cover;background:#fff;'> -->
+                    <input type='text' id='editName' value='${info.name}' placeholder='姓名' maxlength='12' style='margin-bottom:8px;'>
+                    <input type='date' id='editBirthday' value='${info.birthday}' style='margin-bottom:8px;'>
+                    <input type='text' id='editSign' value='${info.sign}' placeholder='星座' maxlength='8' style='margin-bottom:8px;'>
+                    <input type='text' id='editMbti' value='${info.mbti||''}' placeholder='MBTI' maxlength='8' style='margin-bottom:8px;'>
+                    <!-- <input type='text' id='editSignature' value='${info.signature}' placeholder='签名' maxlength='30' style='margin-bottom:8px;'> -->
+                    <div style='display:flex;gap:12px;'>
+                        <button id='editInfoSaveBtn' style='background:#ff69b4;color:#fff;'>保存</button>
+                        <button id='editInfoCancelBtn' style='background:#eee;color:#888;'>取消</button>
+                    </div>
+                </div>
+            `;
+            document.body.appendChild(modal);
+            
+            // 头像预览
+            // document.getElementById('editAvatar').onchange = function(e){
+            //     const file = e.target.files[0];
+            //     if(file){
+            //         if(file.size > 200*1024){ // 200KB
+            //             alert('请上传200KB以内的图片');
+            //             return;
+            //         }
+            //         if(file.type.match('image.*')){
+            //             const reader = new FileReader();
+            //             reader.onload = function(ev){
+            //                 document.getElementById('editAvatarPreview').src = ev.target.result;
+            //             };
+            //             reader.readAsDataURL(file);
+            //         }
+            //     }
+            // };
+            
+            document.getElementById('editInfoCancelBtn').onclick = ()=>modal.remove();
+            
+            document.getElementById('editInfoSaveBtn').onclick = function(){
+                const name = document.getElementById('editName').value.trim();
+                const birthday = document.getElementById('editBirthday').value;
+                const sign = document.getElementById('editSign').value.trim();
+                const mbti = document.getElementById('editMbti').value.trim();
+                // const signature = document.getElementById('editSignature').value.trim();
+                let avatar = ourInfo[idx].avatar; // 头像上传功能已注释，仅保留原头像
+                
+                if(!name||!birthday||!sign){alert('姓名、生日、星座不能为空');return;}
+                
+                ourInfo[idx] = {name,avatar,birthday,sign,mbti,signature:ourInfo[idx].signature};
+                saveInfo(ourInfo);
+                renderOurInfo();
+                modal.remove();
+            };
+        }
+
+        // 页面加载时调用
+        window.onload = function() {
+            updateCurrentDatetime();
+            renderAnniversaries();
+            renderPhotoGallery();
+            renderMessages();
+            renderOurInfo();
+        };
+
+        const PET_KEY = 'petInfoData';
+        const defaultPet = {name:'',avatar:'https://api.dicebear.com/7.x/bottts/svg?seed=pet',age:''};
+        function getPetInfo(){
+            const data = localStorage.getItem(PET_KEY);
+            if(data){
+                try{return JSON.parse(data);}catch(e){return defaultPet;}
+            }
+            return defaultPet;
+        }
+        function savePetInfo(obj){
+            localStorage.setItem(PET_KEY, JSON.stringify(obj));
+        }
+        let petInfo = getPetInfo();
+
+        function showEditPetModal(){
+            const modal = document.createElement('div');
+            modal.className = 'anniversary-input-modal';
+            modal.innerHTML = `
+                <div class='anniversary-input-box' style='min-width:260px;'>
+                    <div style='font-size:1.1em;color:#ff69b4;font-weight:bold;margin-bottom:8px;'>编辑宠物信息</div>
+                    <label style='margin-bottom:4px;'>头像：</label>
+                    <input type='file' id='editPetAvatar' accept='image/*' style='margin-bottom:8px;'>
+                    <img src='${petInfo.avatar}' id='editPetAvatarPreview' style='width:60px;height:60px;border-radius:50%;margin-bottom:8px;object-fit:cover;background:#fff;'>
+                    <input type='text' id='editPetName' value='${petInfo.name}' placeholder='宠物姓名' maxlength='12' style='margin-bottom:8px;'>
+                    <input type='text' id='editPetAge' value='${petInfo.age}' placeholder='年龄' maxlength='8' style='margin-bottom:8px;'>
+                    <div style='display:flex;gap:12px;'>
+                        <button id='editPetSaveBtn' style='background:#ff69b4;color:#fff;'>保存</button>
+                        <button id='editPetCancelBtn' style='background:#eee;color:#888;'>取消</button>
+                    </div>
+                </div>
+            `;
+            document.body.appendChild(modal);
+            document.getElementById('editPetAvatar').onchange = function(e){
+                const file = e.target.files[0];
+                if(file && file.type.match('image.*')){
+                    compressImage(file, 300, 300, 0.7, function(dataUrl){
+                        document.getElementById('editPetAvatarPreview').src = dataUrl;
+                    });
+                }
+            };
+            document.getElementById('editPetCancelBtn').onclick = ()=>modal.remove();
+            document.getElementById('editPetSaveBtn').onclick = function(){
+                const name = document.getElementById('editPetName').value.trim();
+                const age = document.getElementById('editPetAge').value.trim();
+                let avatar = document.getElementById('editPetAvatarPreview').src;
+                if(!name){alert('宠物姓名不能为空');return;}
+                petInfo = {name,avatar,age};
+                savePetInfo(petInfo);
+                renderOurInfo();
+                modal.remove();
+            };
+        }
+    </script>
+</body>
+</html>
