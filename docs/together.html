@@ -359,6 +359,47 @@
                     font-size: 0.9em;
                     margin-top: 30px;
                 }
+                #ourInfoCards {
+                    flex-direction: column !important;
+                    gap: 16px !important;
+                    align-items: stretch !important;
+                }
+                .info-card {
+                    min-width: unset !important;
+                    max-width: 98vw !important;
+                    width: 100% !important;
+                    margin: 0 auto 12px auto !important;
+                    padding: 16px 8px !important;
+                    border-radius: 18px !important;
+                    box-shadow: 0 2px 8px rgba(255,182,193,0.13);
+                    align-items: center !important;
+                    background: linear-gradient(135deg, #fff0f5 80%, #ffe4ec 100%) !important;
+                }
+                .info-avatar {
+                    width: 70px !important;
+                    height: 70px !important;
+                    margin-bottom: 8px !important;
+                    border-radius: 16px !important;
+                    box-shadow: 0 1px 4px rgba(255,182,193,0.13);
+                }
+                .info-label, .info-value {
+                    font-size: 0.95em !important;
+                    text-align: center !important;
+                }
+                .info-edit-btn {
+                    width: 32px !important;
+                    height: 32px !important;
+                    font-size: 1.2em !important;
+                    top: 8px !important;
+                    right: 8px !important;
+                    border-radius: 50% !important;
+                    background: #ffb6c1 !important;
+                    color: #fff !important;
+                    box-shadow: 0 2px 6px rgba(255,182,193,0.13);
+                }
+                .info-edit-btn:hover {
+                    background: #ff69b4 !important;
+                }
             }
             .delete-photo-btn {
                 position: absolute;
@@ -488,7 +529,7 @@
 <body>
     <div class="container">
         <header>
-            <h1>our love</h1>
+            <h1>Our Love</h1>
             <div class="couple-name">xx ❤ xx</div>
         </header>
         <section class="section" id="our-info" style="margin-bottom:32px;">
@@ -517,7 +558,6 @@
         <section class="section" id="countdown">
             <h2>Our exclusive memories</h2>
             <button id="addAnniversaryBtn" style="display:block;margin:0 auto 18px auto;background:linear-gradient(90deg,#ffb6c1,#ff69b4);color:#fff;border:none;border-radius:24px;padding:10px 28px;font-size:1em;cursor:pointer;font-weight:bold;box-shadow:0 2px 8px rgba(255,105,180,0.13);transition:background 0.2s,transform 0.2s;">＋ 添加纪念日</button>
-            <div class="anniversary-date">我们的恋爱纪念日: 2025-05-10</div>
             <div class="current-datetime" id="currentDatetime" style="text-align:center;font-size:1.1em;color:#888;margin-bottom:18px;"></div>
             <div id="anniversaryList">
                 <div class="countdown-day-box" id="countdownDayBox" style="display:flex;flex-direction:column;align-items:center;justify-content:center;margin-top:18px;">
@@ -574,7 +614,7 @@
             }
             // 默认纪念日
             return [
-                {title:'我们的恋爱纪念日', date:'2025-05-10'}
+               {title:'你想要的标题', date:'你想要的日期'}
             ];
         }
         function saveAnniversaryData(data) {
@@ -584,7 +624,16 @@
         function renderAnniversaries() {
             const list = document.getElementById('anniversaryList');
             list.innerHTML = '';
-            anniversaryData.forEach(item => {
+            // 动态更新顶部纪念日信息
+            const annivInfo = document.getElementById('anniversaryDateInfo');
+            if (annivInfo) {
+                if (anniversaryData.length > 0) {
+                    annivInfo.textContent = anniversaryData[0].title + ': ' + anniversaryData[0].date;
+                } else {
+                    annivInfo.textContent = '暂无纪念日';
+                }
+            }
+            anniversaryData.forEach((item, idx) => {
                 const box = document.createElement('div');
                 box.className = 'countdown-day-box';
                 // 计算天数
@@ -608,7 +657,46 @@
                     <div class="countdown-day-number">${days}</div>
                     <div class="countdown-day-label">${label}</div>
                     <div class="countdown-day-title">${item.title}</div>
+                    <div style="margin-top:8px;display:flex;gap:10px;justify-content:center;">
+                        <button class="edit-anniv-btn" style="background:#ffb6c1;color:#fff;border:none;border-radius:8px;padding:4px 12px;cursor:pointer;">编辑</button>
+                        <button class="delete-anniv-btn" style="background:#eee;color:#ff69b4;border:none;border-radius:8px;padding:4px 12px;cursor:pointer;">删除</button>
+                    </div>
                 `;
+                // 绑定删除事件
+                box.querySelector('.delete-anniv-btn').onclick = function() {
+                    if(confirm('确定要删除这个纪念日吗？')) {
+                        anniversaryData.splice(idx, 1);
+                        saveAnniversaryData(anniversaryData);
+                        renderAnniversaries();
+                    }
+                };
+                // 绑定编辑事件
+                box.querySelector('.edit-anniv-btn').onclick = function() {
+                    const modal = document.createElement('div');
+                    modal.className = 'anniversary-input-modal';
+                    modal.innerHTML = `
+                        <div class='anniversary-input-box'>
+                            <div style='font-size:1.1em;color:#ff69b4;font-weight:bold;'>编辑纪念日</div>
+                            <input type='text' id='editAnnivTitle' value='${item.title}' placeholder='事件名称' maxlength='20' required>
+                            <input type='date' id='editAnnivDate' value='${item.date}' required>
+                            <div style='display:flex;gap:12px;'>
+                                <button id='editAnnivSaveBtn'>保存</button>
+                                <button id='editAnnivCancelBtn' style='background:#eee;color:#888;'>取消</button>
+                            </div>
+                        </div>
+                    `;
+                    document.body.appendChild(modal);
+                    document.getElementById('editAnnivCancelBtn').onclick = ()=>modal.remove();
+                    document.getElementById('editAnnivSaveBtn').onclick = function() {
+                        const title = document.getElementById('editAnnivTitle').value.trim();
+                        const date = document.getElementById('editAnnivDate').value;
+                        if(!title || !date) { alert('请填写完整'); return; }
+                        anniversaryData[idx] = {title, date};
+                        saveAnniversaryData(anniversaryData);
+                        renderAnniversaries();
+                        modal.remove();
+                    };
+                };
                 list.appendChild(box);
             });
         }
@@ -810,7 +898,7 @@
             }
             // 默认留言
             return [
-                {author:'May', date:'2025-06-19', content:'我总是特别特别想念你，想一直呆在你的身边。'}
+                {author:'xx', date:'2025-06-19', content:'我总是特别特别想念你，想一直呆在你的身边。'}
             ];
         }
         function saveMessages(msgs) {
@@ -957,7 +1045,6 @@
             const card1 = document.createElement('div');
             card1.className = 'info-card';
             card1.innerHTML = `
-
                 <button class="info-edit-btn" title="编辑" id="editBtn0">✎</button>
                 <div class="info-label">姓名</div><div class="info-value">${info0.name||'未填写'}</div>
                 <div class="info-label">生日</div><div class="info-value">${info0.birthday||'未填写'}</div>
@@ -967,23 +1054,11 @@
             `;
             card1.querySelector(`#editBtn0`).onclick = ()=>showEditInfoModal(0);
             box.appendChild(card1);
-            // 渲染宠物卡片
-            const petCard = document.createElement('div');
-            petCard.className = 'info-card';
-            petCard.innerHTML = `
-                <img src="${petInfo.avatar}" class="info-avatar" id="petAvatar">
-                <button class="info-edit-btn" title="编辑" id="editPetBtn">✎</button>
-                <div class="info-label">姓名</div><div class="info-value">${petInfo.name||'未填写'}</div>
-                <div class="info-label">年龄</div><div class="info-value">${petInfo.age||'未填写'}</div>
-            `;
-            petCard.querySelector('#editPetBtn').onclick = showEditPetModal;
-            box.appendChild(petCard);
             // 渲染第二个人
             const info1 = ourInfo[1] || {name:'',avatar:'https://api.dicebear.com/7.x/personas/svg?seed=person2',birthday:'',sign:'',mbti:'',signature:''}
             const card2 = document.createElement('div');
             card2.className = 'info-card';
             card2.innerHTML = `
-
                 <button class="info-edit-btn" title="编辑" id="editBtn1">✎</button>
                 <div class="info-label">姓名</div><div class="info-value">${info1.name||'未填写'}</div>
                 <div class="info-label">生日</div><div class="info-value">${info1.birthday||'未填写'}</div>
@@ -993,6 +1068,17 @@
             `;
             card2.querySelector(`#editBtn1`).onclick = ()=>showEditInfoModal(1);
             box.appendChild(card2);
+            // 渲染宠物卡片
+            const petCard = document.createElement('div');
+            petCard.className = 'info-card';
+            petCard.innerHTML = `
+                <img src="${petInfo.avatar}" class="info-avatar" id="petAvatar">
+                <button class="info-edit-btn" title="编辑" id="editPetBtn">✎</button>
+                <div class="info-label">宠物宝宝的名字</div><div class="info-value">${petInfo.name||'未填写'}</div>
+                <div class="info-label">年龄</div><div class="info-value">${petInfo.age||'未填写'}</div>
+            `;
+            petCard.querySelector('#editPetBtn').onclick = showEditPetModal;
+            box.appendChild(petCard);
         }
 
         // 编辑弹窗
